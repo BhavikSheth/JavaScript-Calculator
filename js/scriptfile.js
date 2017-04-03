@@ -2,7 +2,7 @@ window.onload = function() {
   var calc = {
     buttonClicked: '',
     currentInput: '',
-    finalInput: ''
+    finalInput: '',
   };
 
   $('.button').on('click', function() {
@@ -34,7 +34,7 @@ window.onload = function() {
       calc.finalInput = calc.finalInput + calc.buttonClicked;
       printTop(calc.finalInput);
     } else if (calc.buttonClicked == '.') {
-      calc.finalInput = calc.finalInput.replace(/\.$/, '');
+      calc.finalInput = calc.finalInput.slice(0,-1);
       if (!calc.finalInput.match(/[0-9.]*$/)[0].match(/\./g)) {
         calc.finalInput = calc.finalInput + '.';
         printTop(calc.finalInput);
@@ -42,11 +42,14 @@ window.onload = function() {
         printTop(calc.finalInput);
       }
     } else if (calc.buttonClicked == '=') {
+      calc.finalInput = calc.finalInput.slice(0,-1);
       calc.finalInput = changeSign(calc.finalInput); // replace the division and multiplication sign with the correct javascript operators and remove any signs at the end of the input
       printTop(calculate(calc.finalInput));
-      printBottom('');
+      calc.finalInput = '';
+      printBottom(calc.finalInput);
     } else {
       printTop(calc.finalInput);
+      calc.finalInput = changeSign(calc.finalInput);
       printBottom(calculate(calc.finalInput));
     }
     calc.currentInput = calc.finalInput;
@@ -61,10 +64,11 @@ window.onload = function() {
   }
   
   function calculate(value) { // function to calculate and round the answer
+    console.log('value', value);
     return  Math.round(eval(value)*100000000000000)/100000000000000;
   }
   
-  function changeSign(value) { //f function to replace the division and multiplication sign, and remove any sign at the end
+  function changeSign(value) { // if function to replace the division and multiplication sign, and remove any sign at the end
     return value.replace(/[÷x]/g, v=>v=='÷' ? '/' : '*').replace(/[/*-+]$/, '');
   }
 }
