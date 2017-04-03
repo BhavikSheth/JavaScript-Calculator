@@ -3,6 +3,7 @@ window.onload = function() {
     buttonClicked: '',
     currentInput: '',
     finalInput: '',
+    ansFormat: ''
   };
 
   $('.button').on('click', function() {
@@ -43,14 +44,14 @@ window.onload = function() {
       }
     } else if (calc.buttonClicked == '=') {
       calc.finalInput = calc.finalInput.slice(0,-1);
-      calc.finalInput = changeSign(calc.finalInput); // replace the division and multiplication sign with the correct javascript operators and remove any signs at the end of the input
-      printTop(calculate(calc.finalInput));
+      calc.ansFormat = changeSign(calc.finalInput); // replace the division and multiplication sign with the correct javascript operators and remove any signs at the end of the input
+      printTop(calculate(calc.ansFormat));
       calc.finalInput = '';
       printBottom(calc.finalInput);
     } else {
       printTop(calc.finalInput);
-      calc.finalInput = changeSign(calc.finalInput);
-      printBottom(calculate(calc.finalInput));
+      calc.ansFormat = changeSign(calc.finalInput);
+      printBottom(calculate(calc.ansFormat));
     }
     calc.currentInput = calc.finalInput;
   });
